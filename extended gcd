@@ -1,0 +1,25 @@
+#include <iostream>
+#include <utility>
+using namespace std;
+
+pair<int, pair<int, int>> extended_gcd(int a, int b) {
+    if (b == 0) {
+        return { a, {1, 0} };
+    }
+    auto [gcd, xy] = extended_gcd(b, a % b);
+    int x = xy.second;
+    int y = xy.first - (a / b) * xy.second;
+    return { gcd, {x, y} };
+}
+
+int main() {
+    int a = 5, b = 15;
+    auto result = extended_gcd(a, b);
+
+    int gcd = result.first;
+    int x1 = result.second.first;
+    int y1 = result.second.second;
+    
+    int lcm = abs(a * b) / gcd;
+    cout << "gcd:" << gcd << "\nx:" << x1 << "\ny:" << y1 <<"\nlcm:" << lcm << endl;
+}
